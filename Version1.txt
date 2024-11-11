@@ -1,0 +1,156 @@
+import java.util.Scanner;
+public class assignment1 {
+    public static void main(String[]arg)
+    {   
+        String name, identityCardNo, bloodType, weightStatus, dob, gender="";
+        double height, weight;
+        char decision;
+        boolean validName=false, validIC=false, validHeight, validWeight, validBloodType, validDecision;
+        Scanner sc = new Scanner(System.in);
+        do
+        {
+        System.out.println("Please enter the patient's details.");
+        do
+        {
+        System.out.print("Name: ");
+        name = sc.nextLine();
+            for (int i=0;i<name.length();i++) //checking if the name only contain space and alphabet
+            {
+                char character = name.charAt(i);
+                if (!Character.isLetter(character) && !Character.isWhitespace(character))  
+                    {
+                        System.out.print("Invalid name, it should not contains special characters or numbers.\nPlease input again.\n");
+                        validName=false;
+                        break;
+                    }
+                else
+                {validName=true;}
+                
+            }
+        }while(validName==false);
+        do
+        {
+        System.out.print("Identity card number(no dash needed): ");
+        identityCardNo = sc.nextLine();
+        if(identityCardNo.length()!=12)
+        {
+            System.out.print("Invalid IC, it should contains 12 digits.\nPlease input again.\n");
+            validIC=false;
+        }
+        else
+        {
+            for (int i=0;i<12;i++) //checking if the identityCardNo only contains numbers
+            {
+                char chara = identityCardNo.charAt(i);
+                if (!Character.isDigit(chara))  
+                    {
+                        System.out.print("Invalid IC, it should contains only numbers.\nPlease input again.\n");
+                        validIC=false;
+                        break;
+                    }
+                else
+                {validIC=true;}
+            }
+        }
+         
+        }while(validIC==false);
+        dob =identityCardNo.substring(4,6)+"/"
+                +identityCardNo.substring(2,4)+"/"
+                +identityCardNo.substring(0,2);         //store dob in format of DD/MM/YY
+        if(identityCardNo.charAt(11)%2!=0)
+        {
+           gender = "Male";
+        }
+        else
+        {
+            gender = "Female";
+        }
+        do
+        {
+        System.out.print("Height(in meter): ");
+        height = sc.nextDouble();
+        if (height>0 || height<3)
+        {
+            validHeight=true;
+        }
+        else
+        {
+            System.out.print("Invalid height, it should not be negative value or higher than 3m.\nPlease input again.\n");
+            validHeight=false;
+        }
+        }while(validHeight==false);
+        do
+        {
+        System.out.print("Weight(in kilogram): ");
+        weight = sc.nextDouble();
+        sc.nextLine(); // Consume newline left-over
+        if (weight>0 || weight<640 )
+        {   
+            validWeight=true;
+        }
+        else
+        {
+            System.out.print("Invalid weight, it should not be 0 or lower than 0 or heavier than 640kg.\nPlease input again.\n");
+            validWeight=false;
+        }
+        }while(validWeight==false);
+        do
+        {
+        System.out.print("Blood type(A+,A-,B+,B-,O+,O-,AB+,AB-): ");
+        bloodType = sc.nextLine();
+        if(bloodType.equals("A+") || bloodType.equals("A-")|| bloodType.equals("B+")|| bloodType.equals("B-")|| bloodType.equals("O+")|| bloodType.equals("O-")|| bloodType.equals("AB+")|| bloodType.equals("AB-"))
+        {   
+            validBloodType=true;
+        }
+        else
+        {
+            System.out.print("Invalid blood type.\nPlease input again.\n");
+            validBloodType=false;
+        }
+        }while (validBloodType==false);
+        double bmi=weight/(Math.pow(height,2));
+        if(bmi>=30)
+        {
+            weightStatus="Obese";
+        }
+        else if(bmi<30 && bmi>=25)
+        {
+            weightStatus="Overweight";
+        }
+        else if(bmi<25 && bmi>=18.5)
+        {
+            weightStatus="Healthy Weight";
+        }
+        else
+        {
+             weightStatus="Underweight";
+        }
+        System.out.println("=============================================");
+        System.out.println("Name: \t\t\t "+name);
+        System.out.println("Identity card number:    "+identityCardNo);
+        System.out.printf("Height: \t\t %.2f m",height);
+        System.out.printf("\nWeight: \t\t %.1f kg",weight);
+        System.out.println("\nBlood type: \t\t "+bloodType);
+        System.out.println("Date of birth[DD/MM/YY]: "+dob);
+        System.out.println("Gender: \t\t "+gender);
+        System.out.printf("BMI: \t\t\t %.1f",bmi);
+        System.out.println("\nWeight status: \t\t "+weightStatus);
+        System.out.println("=============================================");
+        do
+        {
+        System.out.print("Continue for the next patient's details?[Y/N]: ");
+        decision = sc.next().charAt(0);
+        sc.nextLine(); // Consume newline left-over
+        if(decision!='Y'&& decision!='y'&&decision!='N'&&decision!='n')
+        {
+            System.out.println("Invalid input, please key in either Y or N.");
+            validDecision=false;
+        }
+        else
+        {
+            validDecision=true;
+        }
+        }while(validDecision==false);
+        }while(decision=='Y'||decision=='y');
+    }
+}
